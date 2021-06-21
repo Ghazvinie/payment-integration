@@ -2,7 +2,6 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const paypalSdk = require('paypal-rest-sdk');
 
 // Express app
 const app = express();
@@ -36,3 +35,7 @@ app.use(express.static(__dirname + '/public'));
   app.get('/', (req, res) => {
       res.render('index');
   }); 
+
+app.get('/pay', (req, res) => {
+
+});
