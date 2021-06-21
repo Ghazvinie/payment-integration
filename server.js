@@ -1,8 +1,9 @@
 const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const session = require('express-session');
+const paypalSdk = require('paypal-rest-sdk');
+
 
 
 // Express app
