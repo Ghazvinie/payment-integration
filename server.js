@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const paypalSdk = require('paypal-rest-sdk');
 
-
-
 // Express app
 const app = express();
 
@@ -32,6 +30,9 @@ app.use(express.json());
 app.set('views', './public/views');
 app.set('view engine', 'ejs');
 
+// Set static files
+app.use(express.static(__dirname + '/public'));
+
   app.get('/', (req, res) => {
-      res.send('Home');
+      res.render('index');
   }); 
