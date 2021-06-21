@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Sign Up</title>
     <link rel="stylesheet" href="/styles/styles.css">
+
 </head>
 
 <body>
     <h3>
         Buy something
     </h3>
-    <form>
-        <div class="btn-div">
-            <button type="submit" formaction="/pay">Buy Me £25</button>
-        </div>
-        <div class="btn-div">
-            <button type="submit" formaction="/pay">Want Me £50</button>
-        </div>
-    </form>
+
+    <div class="container">
+        <div id="paypal-button-container"></div>
+        <script src="https://www.paypal.com/sdk/js?client-id=sb&buyer-country=GB&currency=GBP"></script>
+        <script>paypal.Buttons().render('#paypal-button-container');</script>
+    </div>
+
 
 </body>
 

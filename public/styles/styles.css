@@ -79,3 +79,10 @@ form{
     padding: 10px 16px;
     letter-spacing: 2px;
   }
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+  #paypal-button-container{
+    width: 35%;
+  }
