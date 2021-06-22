@@ -2,9 +2,7 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const paypal = require('@paypal/checkout-server-sdk');
-
-const paypalClient = require('./config/paypalConfig');
+const paypal = require('paypal-rest-sdk')
 
 // Express app
 const app = express();
@@ -38,36 +36,3 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
   res.render('index');
 });
-
-app.get('/pay', (req, res) => {
-  // return handlepaypalRequest(req, res);
-  res.send('pay')
-});
-
-async function handlepaypalRequest(req, res) {
-
-  const paypalRequest = new paypal.orders.OrdersCreatepaypalRequest();
-  paypalRequest.prefer("return=representation");
-  paypalRequest.paypalRequestBody({
-    intent: 'CAPTURE',
-    purchase_units: [{
-      amount: {
-        currency_code: 'USD',
-        value: '220.00'
-      }
-    }]
-  });
-
-  let order;
-  try {
-    order = await paypalClient.client().execute(paypalRequest);
-  } catch (err) {
-    console.error(err);
-    return res.send(500);
-
-  }
-  res.status(200).json({
-    orderID: order.result.id
-  });
-
-}

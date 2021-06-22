@@ -17,7 +17,7 @@
 
     <form>
         <div class="btn-div">
-            <button type="submit" formaction="/pay">Click Me</button>
+            <button type="submit" id="btn">Click Me</button>
         </div>
         <div class="btn-div">
             <button type="submit" formaction="/auth/signup">Sign Up</button>
@@ -25,46 +25,39 @@
     </form>
 
 
-    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AbvbWHRwU3cUGirNPUGQa3vAwvYVq8Y0WlZVVh1hq02wXYiRpAwwT4gEHFui7cK7JbhTbPM2yTlCVUaR&buyer-country=GB&currency=GBP"></script>
     <script>
+        const button = document.querySelector('form');
 
-        paypal.Buttons({
-      
-          createOrder: function(data, actions) {
-      
-            // This function sets up the details of the transaction, including the amount and line item details.
-      
-            return actions.order.create({
-      
-              purchase_units: [{
-      
-                amount: {
-      
-                  value: '10.00'
-      
-                }
-      
-              }]
-      
-            });
-      
-          },
-          onApprove: function(data, actions) {
+        button.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('hello')
+            try {
+                const response = await fetch('/pay', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
 
-// This function captures the funds from the transaction.
+                })
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
 
-return actions.order.capture().then(function(details) {
 
-  // This function shows a transaction success message to your buyer.
+        })
+        async function createOrder() {
 
-  alert('Transaction completed by ' + details.payer.name.given_name);
 
-});
 
-}
-        }).render('#paypal-button-container');
-       -->
-      </script>
+
+
+            // const data = await response.json()
+            // console.log(data);
+
+        }
+    </script>
 </body>
 
 </html>
