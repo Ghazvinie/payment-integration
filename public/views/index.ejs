@@ -78,13 +78,25 @@
     <script>
         const inputValues = document.querySelectorAll('.input-value').forEach(input => input.value = 0)
         const purchaseForms = document.querySelectorAll('.purchase-form');
-        
+        const list = document.getElementById('list');
+        const basket = {}
+
         purchaseForms.forEach(btn => btn.addEventListener('submit', function(e) {
             e.preventDefault()
             const getForm = new FormData(this);
             const itemObject = Object.fromEntries(getForm)
-            document.getElementById('list').innerHTML += `<tr><td>${Object.keys(itemObject)}</td><td>${Object.values(itemObject)}</td></tr>\n`
-            return;
+            const key = Object.keys(itemObject)
+            const value = parseInt(Object.values(itemObject));
+
+            if (value === 0) {
+                return
+            } else {
+                basket[key] === undefined ? basket[key] = value : basket[key] += value;
+            }
+            for (let key in basket){
+                list.innerHTML += `<tr><td>${key}</td><td>${basket[key]}</td></tr>\n`
+            } 
+            // return;
         })
         )
 
