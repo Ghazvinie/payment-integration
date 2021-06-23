@@ -11,47 +11,72 @@
 </head>
 
 <body>
-    <h3>
-        Buy something
-    </h3>
+    <h1 style="text-align: center;">Paypal Integration</h1>
 
-    <form action="/pay" method="POST">
-            <input type="submit" value="buy">
-    </form>
+    <hr>
+    <div class="container">
 
+
+
+        <div class="form-container">
+            <form class="purchase-form">
+                <h2>Buy Me</h2>
+                <h3>£10.00</h3>
+                <br />
+                Quantity:
+                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
+                <input type="submit" name="buy-me" value="Add To Basket" />
+                <br />
+            </form>
+
+            <form class="purchase-form">
+                <h2>Get Me</h2>
+                <h3>£15.00</h3>
+                <br />
+                Quantity:
+                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
+                <input type="submit" value="Add To Basket" />
+                <br />
+            </form>
+
+            <form class="purchase-form">
+                <h2>Want Me</h2>
+                <h3>£20.00</h3>
+                <br />
+                Quantity:
+                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
+                <input type="submit" value="Add To Basket" />
+                <br />
+            </form>
+        </div>
+        <div class="basket-container">
+            <form name="ShoppingList">
+                <fieldset>
+                    <legend>Shopping cart</legend>
+                    <label>Item: <input type="text" name="name"></label>
+                    <label>Quantity: <input type="text" name="data"></label>
+
+                    <input type="button" value="Save" onclick="SaveItem()">
+                    <input type="button" value="Update" onclick="ModifyItem()">
+                    <input type="button" value="Delete" onclick="RemoveItem()">
+                </fieldset>
+                <div id="items_table">
+                    <h2>Shopping List</h2>
+                    <table id="list"></table>
+                    <label><input type="button" value="Clear" onclick="ClearAll()">
+                        Delete all items</label>
+                </div>
+            </form>
+        </div>
+
+    </div>
 
     <script>
-        // const button = document.querySelector('form');
-
-        // button.addEventListener('submit', async (e) => {
-        //     e.preventDefault();
-        //     console.log('hello')
-        //     try {
-        //         const response = await fetch('/pay', {
-        //             method: 'post',
-        //             headers: {
-        //                 'content-type': 'application/json'
-        //             }
-
-        //         })
-        //         const data = await response.json();
-        //         console.log(data);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-
-
-        // })
-        // async function createOrder() {
-
-
-
-
-
-        //     // const data = await response.json()
-        //     // console.log(data);
-
-        // }
+        const purchaseForms = document.querySelectorAll('.purchase-form');
+        purchaseForms.forEach(btn => btn.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
+        )
     </script>
 </body>
 
