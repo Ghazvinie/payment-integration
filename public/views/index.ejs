@@ -15,17 +15,14 @@
 
     <hr>
     <div class="container">
-
-
-
         <div class="form-container">
             <form class="purchase-form">
                 <h2>Buy Me</h2>
                 <h3>£10.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
-                <input type="submit" name="buy-me" value="Add To Basket" />
+                <input type="number" name="Buy Me" value="1" min="0" style="width: 50px;" class="input-value" />
+                <input type="submit" value="Add To Basket"/>
                 <br />
             </form>
 
@@ -34,8 +31,8 @@
                 <h3>£15.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
-                <input type="submit" value="Add To Basket" />
+                <input type="number" name="Get Me" value="1" min="0" style="width: 50px;" class="input-value" />
+                <input type="submit" value="Add To Basket"/>
                 <br />
             </form>
 
@@ -44,25 +41,32 @@
                 <h3>£20.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="quantity" value="1" min="0" style="width: 50px;" class="btn" />
-                <input type="submit" value="Add To Basket" />
+                <input type="number" name="Want Me" value="1" min="0" style="width: 50px;" class="input-value" />
+                <input type="submit" value="Add To Basket"/>
                 <br />
             </form>
         </div>
         <div class="basket-container">
             <form name="ShoppingList">
-                <fieldset>
+                <!-- <fieldset>
                     <legend>Shopping cart</legend>
-                    <label>Item: <input type="text" name="name"></label>
-                    <label>Quantity: <input type="text" name="data"></label>
+                    <label>Item: </label>
+                    <label>Quantity:</label>
 
+                    
+<!-- 
                     <input type="button" value="Save" onclick="SaveItem()">
                     <input type="button" value="Update" onclick="ModifyItem()">
-                    <input type="button" value="Delete" onclick="RemoveItem()">
+                    <input type="button" value="Delete" onclick="RemoveItem()"> -->
                 </fieldset>
                 <div id="items_table">
                     <h2>Shopping List</h2>
-                    <table id="list"></table>
+                    <table id="list">
+                        <tr>
+                            <th>Item:</th>
+                            <th>Quantity:</th> 
+                          </tr>
+                    </table>
                     <label><input type="button" value="Clear" onclick="ClearAll()">
                         Delete all items</label>
                 </div>
@@ -72,11 +76,22 @@
     </div>
 
     <script>
+        const inputValues = document.querySelectorAll('.input-value').forEach(input => input.value = 0)
         const purchaseForms = document.querySelectorAll('.purchase-form');
-        purchaseForms.forEach(btn => btn.addEventListener('submit', (e) => {
-            e.preventDefault();
+        
+        purchaseForms.forEach(btn => btn.addEventListener('submit', function(e) {
+            e.preventDefault()
+            const getForm = new FormData(this);
+            const itemObject = Object.fromEntries(getForm)
+            document.getElementById('list').innerHTML += `<tr><td>${Object.keys(itemObject)}</td><td>${Object.values(itemObject)}</td></tr>\n`
+            return;
         })
         )
+
+        function addToBasket(item, quantity){
+
+
+        }
     </script>
 </body>
 

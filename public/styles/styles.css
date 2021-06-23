@@ -84,3 +84,9 @@ width: min-content;
 .container{
   display: flex;
 }
+table {
+  border-spacing: 15px;
+}
+th {
+  text-align: left;
+}
