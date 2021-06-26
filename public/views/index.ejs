@@ -112,6 +112,9 @@
         buyItem.forEach(btn => btn.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            // Reset subtotal to zero
+            subTotal = 0;
+
             // Object to store prices of items
             const prices = { 'Buy Me': 10, 'Get Me': 15, 'Want Me': 20 };
 
@@ -137,8 +140,10 @@
 
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
+                
+                // Whilst mapping, can also calculate sub-total
+                subTotal += element[1].quantity * element[1].price;
 
-                subTotal += element[1].total; // Update sub-total
                 return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].total}</td></tr>`
             }).join('');
 
@@ -146,7 +151,6 @@
 
             // Update totals
             subTotalText.innerText = `Sub-total: £${subTotal.toFixed(2)}`;
-
             totalText.innerText = `Total: £${(subTotal + deliverySelection).toFixed(2)}`;
 
             // Reset quantities to 1
@@ -170,14 +174,14 @@
                 const response = await fetch('/pay', {
                     method: 'post',
                     body: JSON.stringify(basket),
-                    headers: { 'Content-Type': 'application/json'}
+                    headers: { 'Content-Type': 'application/json' }
                 })
-
-                if (response.redirected) {
-                    window.location.href = response.url
+                const data = await response.json();
+                if (response.status === 200) {
+                    window.location = data.forwardLink;
                 }
             } catch (err) {
-
+                console.log(err)
             }
         });
 

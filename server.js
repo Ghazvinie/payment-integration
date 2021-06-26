@@ -51,37 +51,39 @@ app.post('/pay', (req, res) => {
 
   const basket = req.body;
   const items = Object.keys(basket);
-  const itemsArray = items.map(item => {
-    if (item === 'delivery' || item === 'subTotal') return;
-    return {
-        "items": [{
-          "name": item,
-          "sku": item,
-          "price": basket[item].price,
-          "currency": "GBP",
-          "quantity": basket[item].quantity
-        }]
-    };
-  });
- itemsArray.forEach(item => console.log(item))
+  const itemsArray = items.reduce((acc, curr) => {
+    if (curr !== 'delivery' && curr !== 'subTotal') {
+      acc.push(    {
+        "name": curr,
+        "price": basket[curr].price,
+        "currency": "GBP",
+        "quantity": basket[curr].quantity
+      });
+    }
+
+
+    return acc;
+  }, []);
+
+  //  itemsArray.forEach(item => console.log(item))
   const create_payment_json = {
     "intent": "sale",
     "payer": {
-        "payment_method": "paypal"
+      "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "http://localhost:3000/paysuccess",
-        "cancel_url": "http://localhost:3000/paycancel"
+      "return_url": "http://localhost:3000/paysuccess",
+      "cancel_url": "http://localhost:3000/paycancel"
     },
     "transactions": [{
-        "item_list": {
-            "items": itemsArray
-        },
-        "amount": {
-            "currency": "GBP",
-            "total": basket.subTotal + basket.delivery
-        },
-        "description": "This is the payment description."
+      "item_list": {
+        "items": itemsArray
+      },
+      "amount": {
+        "currency": "GBP",
+        "total": basket.subTotal
+      },
+      "description": "This is the payment description."
     }]
   };
 
@@ -92,7 +94,7 @@ app.post('/pay', (req, res) => {
 
       for (let i = 0; i < payment.links.length; i++){
         if (payment.links[i].rel === 'approval_url'){
-          res.redirect(payment.links[i].href);
+          res.json({forwardLink: payment.links[i].href});
         }
       }
     }
