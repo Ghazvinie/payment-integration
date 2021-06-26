@@ -16,41 +16,44 @@
     <hr>
     <div class="container">
         <div class="form-container">
-            <form class="purchase-form">
+            <form class="buy-item">
                 <h2>Buy Me</h2>
                 <h3>£10.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Buy Me" value="1" min="1" max="10" style="width: 50px;" class="input-value" />
+                <input type="number" name="Buy Me" value="1" min="1" max="10" style="width: 50px;"
+                    class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
 
-            <form class="purchase-form">
+            <form class="buy-item">
                 <h2>Get Me</h2>
                 <h3>£15.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Get Me" value="1" min="1"  max="10" style="width: 50px;" class="input-value" />
+                <input type="number" name="Get Me" value="1" min="1" max="10" style="width: 50px;"
+                    class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
 
-            <form class="purchase-form">
+            <form class="buy-item">
                 <h2>Want Me</h2>
                 <h3>£20.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Want Me" value="1" min="1" max="10" style="width: 50px;" class="input-value" />
+                <input type="number" name="Want Me" value="1" min="1" max="10" style="width: 50px;"
+                    class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
         </div>
         <div class="basket-container">
-            <form name="ShoppingList">
-                <div id="items_table">
-                    <h2>Shopping List</h2>
-                    <table id="list">
+            <form>
+                <div id="basket-table-container">
+                    <h2>Shopping Basket</h2>
+                    <table id="basket-table">
                         <tr>
                             <th>Item:</th>
                             <th>Quantity:</th>
@@ -58,17 +61,24 @@
                         </tr>
                     </table>
 
-                    <label><input type="button" value="Checkout" onclick="flearAll()">
+                    <label><input type="button" value="Checkout" id="checkout">
                         Go To Checkout
                     </label> <br> <br>
                     <label><input type="button" value="Clear" onclick="empty()">
                         Empty Basket
                     </label>
-                        <div class="totals">
-                            <h4 class="sub-total"></h4>
-                            <h4>Shipping: £4.99</h4>
-                            <h3 class="total"></h3>
-                        </div>
+                    <div class="totals">
+                        <h4 class="sub-total"></h4>
+                        <form>
+                            <h4 class="delivery-price">Delivery: £2.50</h4>
+                            <select id="delivery" required>
+                                <option value="2.50">Standard - £2.50</option>
+                                <option value="6.99">Express - £6.99</option>
+                            </select>
+                        </form>
+
+                        <h3 class="total"></h3>
+                    </div>
                 </div>
             </form>
         </div>
@@ -76,19 +86,31 @@
     </div>
 
     <script>
-        const inputValues = document.querySelectorAll('.input-value')
-        inputValues.forEach(input => input.value = 1); // Reset quantities
-        const purchaseForms = document.querySelectorAll('.purchase-form');
-        const list = document.getElementById('list');
+        const quantities = document.querySelectorAll('.input-value'); // Quantity fields
+        quantities.forEach(input => input.value = 1); // Reset quantities
+        const buyItem = document.querySelectorAll('.buy-item'); // Purchase form
+        const basketTable = document.getElementById('basket-table'); // Basket table
+        const delivery = document.getElementById('delivery'); // Delivery charges
+        const checkout = document.getElementById('checkout'); // Checkout button
+
+        // Default delivery selection is standard
+        let deliverySelection = 2.50;
+
+        // Update delivery price display
+        delivery.addEventListener('change', function (e) {
+            deliverySelection = parseFloat(this.selectedOptions[0].value).toFixed(2);
+            document.querySelector('.delivery-price').innerText = `Delivery: £${deliverySelection}`;
+        });
 
         // Create empty basket object
         let basket = {};
 
-        purchaseForms.forEach(btn => btn.addEventListener('submit', function (e) {
+        // Functionality for adding each item to the basket when chosen 
+        buyItem.forEach(btn => btn.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Object to store prices of items
-            const prices = {'Buy Me' : 10, 'Get Me' : 15, 'Want Me': 20};
+            const prices = { 'Buy Me': 10, 'Get Me': 15, 'Want Me': 20 };
 
             // Get form data
             const getForm = new FormData(this);
@@ -103,7 +125,7 @@
                 return;
             } else {
                 // If basket object does not have item, add to object with quantity, or update quantity
-                basket[item] === undefined ? basket[item] = {quantity} : basket[item].quantity += quantity;
+                basket[item] === undefined ? basket[item] = { quantity } : basket[item].quantity += quantity;
                 // Set total price 
                 basket[item].price = prices[item] * basket[item].quantity;
             }
@@ -117,22 +139,27 @@
                 return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].price}</td></tr>`
             }).join('');
 
-            list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update list html
+            basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update basket table html
 
             // Update totals
             document.querySelector('.sub-total').innerHTML = `<h4>Sub-total: £${subTotal.toFixed(2)}</h4>`;
-            document.querySelector('.total').innerHTML = `<h3>Total: £${subTotal + 4.99}</h3>`;
+
+            document.querySelector('.total').innerHTML = `<h3>Total: £${subTotal + deliverySelection}</h3>`;
 
             // Reset quantities to 1
-            inputValues.forEach(input => input.value = 1);
+            quantities.forEach(input => input.value = 1);
             return;
         })
         );
 
+        // checkout.addEventListener('submit', (e) => {
+        //     e.
+        // })
+
         // Empty basket
-        function empty(){
+        function empty() {
             basket = {};
-            list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>`;
+            basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>`;
         }
 
 
