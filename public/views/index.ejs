@@ -22,7 +22,7 @@
                 <br />
                 Quantity:
                 <input type="number" name="Buy Me" value="1" min="0" style="width: 50px;" class="input-value" />
-                <input type="submit" value="Add To Basket"/>
+                <input type="submit" value="Add To Basket" />
                 <br />
             </form>
 
@@ -32,7 +32,7 @@
                 <br />
                 Quantity:
                 <input type="number" name="Get Me" value="1" min="0" style="width: 50px;" class="input-value" />
-                <input type="submit" value="Add To Basket"/>
+                <input type="submit" value="Add To Basket" />
                 <br />
             </form>
 
@@ -42,7 +42,7 @@
                 <br />
                 Quantity:
                 <input type="number" name="Want Me" value="1" min="0" style="width: 50px;" class="input-value" />
-                <input type="submit" value="Add To Basket"/>
+                <input type="submit" value="Add To Basket" />
                 <br />
             </form>
         </div>
@@ -64,8 +64,8 @@
                     <table id="list">
                         <tr>
                             <th>Item:</th>
-                            <th>Quantity:</th> 
-                          </tr>
+                            <th>Quantity:</th>
+                        </tr>
                     </table>
                     <label><input type="button" value="Clear" onclick="ClearAll()">
                         Delete all items</label>
@@ -76,34 +76,40 @@
     </div>
 
     <script>
-        const inputValues = document.querySelectorAll('.input-value').forEach(input => input.value = 0)
+        const inputValues = document.querySelectorAll('.input-value').forEach(input => input.value = 0) // Reset quantities to zero
         const purchaseForms = document.querySelectorAll('.purchase-form');
         const list = document.getElementById('list');
+
+        // Create empty basket object
         const basket = {}
 
-        purchaseForms.forEach(btn => btn.addEventListener('submit', function(e) {
-            e.preventDefault()
-            const getForm = new FormData(this);
-            const itemObject = Object.fromEntries(getForm)
-            const key = Object.keys(itemObject)
-            const value = parseInt(Object.values(itemObject));
+        purchaseForms.forEach(btn => btn.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-            if (value === 0) {
-                return
+            // Get form data
+            const getForm = new FormData(this);
+            // Convert form to usable object
+            const itemObject = Object.fromEntries(getForm)
+
+            // Get item and quantity key/values
+            const item = Object.keys(itemObject)
+            const quantity = parseInt(Object.values(itemObject));
+
+            if (quantity === 0) { // Return if quantity is zero
+                return;
             } else {
-                basket[key] === undefined ? basket[key] = value : basket[key] += value;
+                // If basket object does not have item, add to object with quantity, or update quantity
+                basket[item] === undefined ? basket[item] = quantity : basket[item] += quantity;
             }
-            for (let key in basket){
-                list.innerHTML += `<tr><td>${key}</td><td>${basket[key]}</td></tr>\n`
-            } 
-            // return;
+            // Convert basket object to array to be mapped over, create html based on item and quantity
+            const html = Object.entries(basket).map(element => {
+                return `<tr><td>${element[0]}</td><td>${element[1]}</td></tr>\n`
+            }).join('');
+
+            list.innerHTML = html; // Update list html
+            return;
         })
         )
-
-        function addToBasket(item, quantity){
-
-
-        }
     </script>
 </body>
 
