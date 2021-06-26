@@ -21,7 +21,7 @@
                 <h3>£10.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Buy Me" value="1" min="0" style="width: 50px;" class="input-value" />
+                <input type="number" name="Buy Me" value="1" min="1" max="10" style="width: 50px;" class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
@@ -31,7 +31,7 @@
                 <h3>£15.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Get Me" value="1" min="0" style="width: 50px;" class="input-value" />
+                <input type="number" name="Get Me" value="1" min="1"  max="10" style="width: 50px;" class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
@@ -41,7 +41,7 @@
                 <h3>£20.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Want Me" value="1" min="1" style="width: 50px;" class="input-value" />
+                <input type="number" name="Want Me" value="1" min="1" max="10" style="width: 50px;" class="input-value" />
                 <input type="submit" value="Add To Basket" />
                 <br />
             </form>
@@ -57,10 +57,18 @@
                             <th>Price:</th>
                         </tr>
                     </table>
+
                     <label><input type="button" value="Checkout" onclick="flearAll()">
-                        Go To Checkout</label> <br> <br>
+                        Go To Checkout
+                    </label> <br> <br>
                     <label><input type="button" value="Clear" onclick="empty()">
-                        Empty Basket</label>
+                        Empty Basket
+                    </label>
+                        <div class="totals">
+                            <h4 class="sub-total"></h4>
+                            <h4>Shipping: £4.99</h4>
+                            <h3 class="total"></h3>
+                        </div>
                 </div>
             </form>
         </div>
@@ -68,7 +76,8 @@
     </div>
 
     <script>
-        const inputValues = document.querySelectorAll('.input-value').forEach(input => input.value = 1); // Reset quantities
+        const inputValues = document.querySelectorAll('.input-value')
+        inputValues.forEach(input => input.value = 1); // Reset quantities
         const purchaseForms = document.querySelectorAll('.purchase-form');
         const list = document.getElementById('list');
 
@@ -77,6 +86,9 @@
 
         purchaseForms.forEach(btn => btn.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            // Object to store prices of items
+            const prices = {'Buy Me' : 10, 'Get Me' : 15, 'Want Me': 20};
 
             // Get form data
             const getForm = new FormData(this);
@@ -91,21 +103,39 @@
                 return;
             } else {
                 // If basket object does not have item, add to object with quantity, or update quantity
-                basket[item] === undefined ? basket[item] = quantity : basket[item] += quantity;
+                basket[item] === undefined ? basket[item] = {quantity} : basket[item].quantity += quantity;
+                // Set total price 
+                basket[item].price = prices[item] * basket[item].quantity;
             }
+
+            let subTotal = 0;
+
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
-                return `<tr><td>${element[0]}</td><td>${element[1]}</td><td>£10</td></tr>`
+
+                subTotal += element[1].price; // Update sub-total
+                return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].price}</td></tr>`
             }).join('');
+
             list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update list html
+
+            // Update totals
+            document.querySelector('.sub-total').innerHTML = `<h4>Sub-total: £${subTotal.toFixed(2)}</h4>`;
+            document.querySelector('.total').innerHTML = `<h3>Total: £${subTotal + 4.99}</h3>`;
+
+            // Reset quantities to 1
+            inputValues.forEach(input => input.value = 1);
             return;
         })
         );
 
+        // Empty basket
         function empty(){
             basket = {};
             list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>`;
         }
+
+
 
 
     </script>
