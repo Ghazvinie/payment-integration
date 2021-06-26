@@ -1,30 +1,47 @@
-function createTransactionsArray(basket){
+function createPaymentJson(basket) {
 
 
-const create_payment_json = {
-    "intent": "sale",
-    "payer": {
-        "payment_method": "paypal"
-    },
-    "redirect_urls": {
-        "return_url": "http://localhost:3000/paysuccess",
-        "cancel_url": "http://localhost:3000/paycancel"
-    },
-    "transactions": [{
-        "item_list": {
-            "items": [{
-                "name": "item",
-                "sku": "item",
-                "price": "1.00",
+    const items = Object.keys(basket);
+    const itemsArray = items.reduce((acc, curr) => {
+        if (curr !== 'delivery' && curr !== 'subTotal') {
+            acc.push({
+                "name": curr,
+                "price": basket[curr].price,
                 "currency": "GBP",
-                "quantity": 1
-            }]
+                "quantity": basket[curr].quantity
+            });
+        }
+
+
+        return acc;
+    }, []);
+
+    const paymentJson = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
         },
-        "amount": {
-            "currency": "GBP",
-            "total": "1.00"
+        "redirect_urls": {
+            "return_url": "http://localhost:3000/paysuccess",
+            "cancel_url": "http://localhost:3000/paycancel"
         },
-        "description": "This is the payment description."
-    }]
-  };
+        "transactions": [{
+            "amount": {
+                "currency": "GBP",
+                "total": basket.subTotal + basket.delivery,
+                "details": {
+                    "shipping": basket.delivery,
+                    "subtotal": basket.subTotal,
+                }
+            },
+            "item_list": {
+                "items": itemsArray
+            },
+
+            "description": "This is the payment description."
+        }]
+    };
+    return paymentJson;
 }
+
+module.exports = { createPaymentJson };

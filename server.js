@@ -2,7 +2,8 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const paypal = require('paypal-rest-sdk')
+const paypal = require('paypal-rest-sdk');
+const {createPaymentJson} = require('./utils/paypalutils');
 
 // Express app
 const app = express();
@@ -48,50 +49,13 @@ app.get('/ban', (req, res) => {
 })
 
 app.post('/pay', (req, res) => {
-
   const basket = req.body;
-  const items = Object.keys(basket);
-  const itemsArray = items.reduce((acc, curr) => {
-    if (curr !== 'delivery' && curr !== 'subTotal') {
-      acc.push(    {
-        "name": curr,
-        "price": basket[curr].price,
-        "currency": "GBP",
-        "quantity": basket[curr].quantity
-      });
-    }
+  const paymentJson = createPaymentJson(basket);
 
-
-    return acc;
-  }, []);
-
-  //  itemsArray.forEach(item => console.log(item))
-  const create_payment_json = {
-    "intent": "sale",
-    "payer": {
-      "payment_method": "paypal"
-    },
-    "redirect_urls": {
-      "return_url": "http://localhost:3000/paysuccess",
-      "cancel_url": "http://localhost:3000/paycancel"
-    },
-    "transactions": [{
-      "item_list": {
-        "items": itemsArray
-      },
-      "amount": {
-        "currency": "GBP",
-        "total": basket.subTotal
-      },
-      "description": "This is the payment description."
-    }]
-  };
-
-  paypal.payment.create(create_payment_json, function (error, payment) {
+  paypal.payment.create(paymentJson, function (error, payment) {
     if (error) {
         throw error;
     } else {
-
       for (let i = 0; i < payment.links.length; i++){
         if (payment.links[i].rel === 'approval_url'){
           res.json({forwardLink: payment.links[i].href});
@@ -102,25 +66,26 @@ app.post('/pay', (req, res) => {
 });
 
 app.get('/paysuccess', (req, res) => {
-  const payerId = req.query.PayerID;
-  const paymentId = req.query.paymentId;
+  console.log(req.query)
+  // const payerId = req.query.PayerID;
+  // const paymentId = req.query.paymentId;
 
-  const execute_payment_json = {
-    "payer_id": payerId,
-    "transactions": [{
-      "amount": {
-        "currency": "GBP",
-        "total": "1.00"
-      }
-    }]
-  };
+  // const execute_payment_json = {
+  //   "payer_id": payerId,
+  //   "transactions": [{
+  //     "amount": {
+  //       "currency": "GBP",
+  //       "total": "1.00"
+  //     }
+  //   }]
+  // };
 
-  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-    if (error) {
-      console.log(error.response);
-      throw error;
-    } else {
-      res.send('Success');
-    }
-  });
+  // paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+  //   if (error) {
+  //     console.log(error.response);
+  //     throw error;
+  //   } else {
+  //     res.send('Success');
+  //   }
+  // });
 });
