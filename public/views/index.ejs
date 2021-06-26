@@ -130,15 +130,16 @@
                 // If basket object does not have item, add item to object with quantity, or update item's quantity
                 basket[item] === undefined ? basket[item] = { quantity } : basket[item].quantity += quantity;
                 // Set total price 
-                basket[item].price = prices[item] * basket[item].quantity;
+                basket[item].total = prices[item] * basket[item].quantity;
+                basket[item].price = prices[item]
             }
 
 
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
 
-                subTotal += element[1].price; // Update sub-total
-                return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].price}</td></tr>`
+                subTotal += element[1].total; // Update sub-total
+                return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].total}</td></tr>`
             }).join('');
 
             basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update basket table html
@@ -164,6 +165,7 @@
 
             try {
                 basket.delivery = deliverySelection;
+                basket.subTotal = subTotal;
                 // POST form data and token
                 const response = await fetch('/pay', {
                     method: 'post',

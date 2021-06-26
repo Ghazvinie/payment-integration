@@ -8,7 +8,7 @@ const paypal = require('paypal-rest-sdk')
 const app = express();
 
 paypal.configure({
-  'mode' : 'sandbox',
+  'mode': 'sandbox',
   'client_id': process.env.PAYPAL_CLIENT_ID,
   'client_secret': process.env.PAYPAL_CLIENT_SECRET
 });
@@ -44,51 +44,60 @@ app.get('/', (req, res) => {
 });
 
 app.get('/ban', (req, res) => {
-  res.send('helloo')
+  res.send('helloo');
 })
 
 app.post('/pay', (req, res) => {
-  res.redirect('/ban')
-  // const create_payment_json = {
-  //   "intent": "sale",
-  //   "payer": {
-  //       "payment_method": "paypal"
-  //   },
-  //   "redirect_urls": {
-  //       "return_url": "http://localhost:3000/paysuccess",
-  //       "cancel_url": "http://localhost:3000/paycancel"
-  //   },
-  //   "transactions": [{
-  //       "item_list": {
-  //           "items": [{
-  //               "name": "item",
-  //               "sku": "item",
-  //               "price": "1.00",
-  //               "currency": "GBP",
-  //               "quantity": 1
-  //           }]
-  //       },
-  //       "amount": {
-  //           "currency": "GBP",
-  //           "total": "1.00"
-  //       },
-  //       "description": "This is the payment description."
-  //   }]
-  // };
-  
-  // paypal.payment.create(create_payment_json, function (error, payment) {
-  //   if (error) {
-  //       throw error;
-  //   } else {
 
-  //     for (let i = 0; i < payment.links.length; i++){
-  //       if (payment.links[i].rel === 'approval_url'){
-  //         res.redirect(payment.links[i].href);
-  //       }
-  //     }
-  //   }
-  // });
-})
+  const basket = req.body;
+  const items = Object.keys(basket);
+  const itemsArray = items.map(item => {
+    if (item === 'delivery' || item === 'subTotal') return;
+    return {
+        "items": [{
+          "name": item,
+          "sku": item,
+          "price": basket[item].price,
+          "currency": "GBP",
+          "quantity": basket[item].quantity
+        }]
+    };
+  });
+ itemsArray.forEach(item => console.log(item))
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:3000/paysuccess",
+        "cancel_url": "http://localhost:3000/paycancel"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": itemsArray
+        },
+        "amount": {
+            "currency": "GBP",
+            "total": basket.subTotal + basket.delivery
+        },
+        "description": "This is the payment description."
+    }]
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+        throw error;
+    } else {
+
+      for (let i = 0; i < payment.links.length; i++){
+        if (payment.links[i].rel === 'approval_url'){
+          res.redirect(payment.links[i].href);
+        }
+      }
+    }
+  });
+});
 
 app.get('/paysuccess', (req, res) => {
   const payerId = req.query.PayerID;
@@ -97,19 +106,19 @@ app.get('/paysuccess', (req, res) => {
   const execute_payment_json = {
     "payer_id": payerId,
     "transactions": [{
-        "amount": {
-            "currency": "GBP",
-            "total": "1.00"
-        }
+      "amount": {
+        "currency": "GBP",
+        "total": "1.00"
+      }
     }]
   };
 
   paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
     if (error) {
-        console.log(error.response);
-        throw error;
+      console.log(error.response);
+      throw error;
     } else {
-        res.send('Success');
+      res.send('Success');
     }
-});
+  });
 });
