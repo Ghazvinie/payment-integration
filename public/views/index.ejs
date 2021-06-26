@@ -48,19 +48,19 @@
         </div>
         <div class="basket-container">
             <form name="ShoppingList">
-                </fieldset>
                 <div id="items_table">
                     <h2>Shopping List</h2>
                     <table id="list">
                         <tr>
                             <th>Item:</th>
                             <th>Quantity:</th>
+                            <th>Price:</th>
                         </tr>
                     </table>
-                    <label><input type="button" value="Checkout" onclick="ClearAll()">
+                    <label><input type="button" value="Checkout" onclick="flearAll()">
                         Go To Checkout</label> <br> <br>
-                    <label><input type="button" value="Clear" onclick="ClearAll()">
-                        Delete all items</label>
+                    <label><input type="button" value="Clear" onclick="empty()">
+                        Empty Basket</label>
                 </div>
             </form>
         </div>
@@ -73,7 +73,7 @@
         const list = document.getElementById('list');
 
         // Create empty basket object
-        const basket = {};
+        let basket = {};
 
         purchaseForms.forEach(btn => btn.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -95,12 +95,19 @@
             }
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
-                return `<tr><td>${element[0]}</td><td>${element[1]}</td></tr>\n`
+                return `<tr><td>${element[0]}</td><td>${element[1]}</td><td>£10</td></tr>`
             }).join('');
-            list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>` + html; // Update list html
+            list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update list html
             return;
         })
         );
+
+        function empty(){
+            basket = {};
+            list.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>`;
+        }
+
+
     </script>
 </body>
 
