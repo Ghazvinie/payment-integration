@@ -61,27 +61,28 @@
                         </tr>
                     </table>
 
-                    <label><input type="button" value="Checkout" id="checkout">
-                        Go To Checkout
-                    </label> <br> <br>
-                    <label><input type="button" value="Clear" onclick="empty()">
-                        Empty Basket
-                    </label>
                     <div class="totals">
-                        <h4 class="sub-total"></h4>
+                        <h4 class="sub-total totals"></h4>
                         <form>
-                            <h4 class="delivery-price">Delivery: £2.50</h4>
+                            <h4 class="delivery-price totals">Delivery: £2.50</h4>
                             <select id="delivery" required>
                                 <option value="2.50">Standard - £2.50</option>
                                 <option value="6.99">Express - £6.99</option>
                             </select>
                         </form>
 
-                        <h3 class="total"></h3>
+                        <h3 class="total totals"></h3>
+                    </div>
+                    <div class="basket-buttons-container">
+                        <input type="button" value="Checkout" id="checkout" class="basket-buttons"> <br> <br>
+                        <input type="button" value="Clear" class="basket-buttons" onclick="empty()">
                     </div>
                 </div>
+
             </form>
+
         </div>
+
 
     </div>
 
@@ -92,12 +93,12 @@
         const basketTable = document.getElementById('basket-table'); // Basket table
         const delivery = document.getElementById('delivery'); // Delivery charges
         const checkout = document.getElementById('checkout'); // Checkout button
+        const subTotalText = document.querySelector('.sub-total') // Sub-total text
+        const totalText = document.querySelector('.total')  // Total text
 
-        // Default delivery selection is standard, £2.50
-        let deliverySelection = 2.50;
-
-        // Set subtotal
-        let subTotal = 0;
+        let deliverySelection = 2.50; // Default delivery selection is standard, £2.50
+        let subTotal = 0;   // Set subtotal
+        let basket = {}; // Create empty basket object
 
         // Update delivery price display and total
         delivery.addEventListener('change', function (e) {
@@ -106,9 +107,6 @@
             document.querySelector('.total').innerHTML = `<h3>Total: £${(subTotal + deliverySelection).toFixed(2)}</h3>`;
 
         });
-
-        // Create empty basket object
-        let basket = {};
 
         // Functionality for adding each item to the basket
         buyItem.forEach(btn => btn.addEventListener('submit', function (e) {
@@ -146,9 +144,9 @@
             basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update basket table html
 
             // Update totals
-            document.querySelector('.sub-total').innerHTML = `<h4>Sub-total: £${subTotal.toFixed(2)}</h4>`;
+            subTotalText.innerText = `Sub-total: £${subTotal.toFixed(2)}`;
 
-            document.querySelector('.total').innerHTML = `<h3>Total: £${(subTotal + deliverySelection).toFixed(2)}</h3>`;
+            totalText.innerText = `Total: £${(subTotal + deliverySelection).toFixed(2)}`;
 
             // Reset quantities to 1
             quantities.forEach(input => input.value = 1);
@@ -156,14 +154,38 @@
         })
         );
 
-        // checkout.addEventListener('submit', (e) => {
-        //     e.
-        // })
+        checkout.addEventListener('click', async (e) => {
+            e.preventDefault();
+            // Check basket is not empty
+            if (Object.entries(basket).length === 0) {
+                alert('Basket is empty');
+                return;
+            }
 
-        // Empty basket
+            try {
+                basket.delivery = deliverySelection;
+                // POST form data and token
+                const response = await fetch('/pay', {
+                    method: 'post',
+                    body: JSON.stringify(basket),
+                    headers: { 'Content-Type': 'application/json'}
+                })
+
+                if (response.redirected) {
+                    window.location.href = response.url
+                }
+            } catch (err) {
+
+            }
+        });
+
+        // Clear basket object, basket html and basket totals
         function empty() {
             basket = {};
-            basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></tr>`;
+            basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th></th><th>Price:</th></tr>`;
+            subTotalText.innerHTML = ``;
+            totalText.innerText = ``;
+            return;
         }
 
 

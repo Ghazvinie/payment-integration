@@ -92,3 +92,15 @@ th, td {
 #basket-table-container > h2{
   text-align: center;
 }
+.basket-buttons {
+  width: 125px;
+  font-size: small;
+  margin: 30px 10px;
+}
+.basket-buttons-container{
+  display: flex;
+  align-items: center;
+}
+.totals {
+  font-size: medium;
+}

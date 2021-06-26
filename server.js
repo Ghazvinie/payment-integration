@@ -43,46 +43,51 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/pay', (req, res) => {
-  const create_payment_json = {
-    "intent": "sale",
-    "payer": {
-        "payment_method": "paypal"
-    },
-    "redirect_urls": {
-        "return_url": "http://localhost:3000/paysuccess",
-        "cancel_url": "http://localhost:3000/paycancel"
-    },
-    "transactions": [{
-        "item_list": {
-            "items": [{
-                "name": "item",
-                "sku": "item",
-                "price": "1.00",
-                "currency": "GBP",
-                "quantity": 1
-            }]
-        },
-        "amount": {
-            "currency": "GBP",
-            "total": "1.00"
-        },
-        "description": "This is the payment description."
-    }]
-  };
-  
-  paypal.payment.create(create_payment_json, function (error, payment) {
-    if (error) {
-        throw error;
-    } else {
+app.get('/ban', (req, res) => {
+  res.send('helloo')
+})
 
-      for (let i = 0; i < payment.links.length; i++){
-        if (payment.links[i].rel === 'approval_url'){
-          res.redirect(payment.links[i].href);
-        }
-      }
-    }
-  });
+app.post('/pay', (req, res) => {
+  res.redirect('/ban')
+  // const create_payment_json = {
+  //   "intent": "sale",
+  //   "payer": {
+  //       "payment_method": "paypal"
+  //   },
+  //   "redirect_urls": {
+  //       "return_url": "http://localhost:3000/paysuccess",
+  //       "cancel_url": "http://localhost:3000/paycancel"
+  //   },
+  //   "transactions": [{
+  //       "item_list": {
+  //           "items": [{
+  //               "name": "item",
+  //               "sku": "item",
+  //               "price": "1.00",
+  //               "currency": "GBP",
+  //               "quantity": 1
+  //           }]
+  //       },
+  //       "amount": {
+  //           "currency": "GBP",
+  //           "total": "1.00"
+  //       },
+  //       "description": "This is the payment description."
+  //   }]
+  // };
+  
+  // paypal.payment.create(create_payment_json, function (error, payment) {
+  //   if (error) {
+  //       throw error;
+  //   } else {
+
+  //     for (let i = 0; i < payment.links.length; i++){
+  //       if (payment.links[i].rel === 'approval_url'){
+  //         res.redirect(payment.links[i].href);
+  //       }
+  //     }
+  //   }
+  // });
 })
 
 app.get('/paysuccess', (req, res) => {
