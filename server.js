@@ -49,10 +49,9 @@ app.post('/pay', (req, res) => {
   const basket = req.body;
   tempBasket = basket;
   const paymentJson = createPaymentJson(basket);
-  res.locals.basket = basket;
-  paypal.payment.create(paymentJson, function (error, payment) {
+  paypal.payment.create(paymentJson, (error, payment) => {
     if (error) {
-        throw error;
+      console.log(error);
     } else {
       for (let i = 0; i < payment.links.length; i++){
         if (payment.links[i].rel === 'approval_url'){
@@ -71,10 +70,10 @@ const paymentJson = executePaymentJson(tempBasket, payerId);
 
   paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
     if (error) {
-      console.log(error.response);
-      throw error;
+      console.log(error);
     } else {
       res.send('Success');
+      tempBasket = null;
     }
   });
 });
