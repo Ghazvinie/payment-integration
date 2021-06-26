@@ -93,20 +93,25 @@
         const delivery = document.getElementById('delivery'); // Delivery charges
         const checkout = document.getElementById('checkout'); // Checkout button
 
-        // Default delivery selection is standard
+        // Default delivery selection is standard, £2.50
         let deliverySelection = 2.50;
 
-        // Update delivery price display
+        // Set subtotal
+        let subTotal = 0;
+
+        // Update delivery price display and total
         delivery.addEventListener('change', function (e) {
-            deliverySelection = parseFloat(this.selectedOptions[0].value).toFixed(2);
-            document.querySelector('.delivery-price').innerText = `Delivery: £${deliverySelection}`;
+            deliverySelection = parseFloat(this.selectedOptions[0].value);
+            document.querySelector('.delivery-price').innerText = `Delivery: £${deliverySelection.toFixed(2)}`;
+            document.querySelector('.total').innerHTML = `<h3>Total: £${(subTotal + deliverySelection).toFixed(2)}</h3>`;
+
         });
 
         // Create empty basket object
         let basket = {};
 
-        // Functionality for adding each item to the basket when chosen 
-        buyItem.forEach(btn => btn.addEventListener('click', function (e) {
+        // Functionality for adding each item to the basket
+        buyItem.forEach(btn => btn.addEventListener('submit', function (e) {
             e.preventDefault();
 
             // Object to store prices of items
@@ -121,16 +126,15 @@
             const item = Object.keys(itemObject);
             const quantity = parseInt(Object.values(itemObject));
 
-            if (quantity === 0) { // Return if quantity is zero
+            if (quantity <= 0 || quantity > 10) { // Make sure user can't add less than one item or more than ten
                 return;
             } else {
-                // If basket object does not have item, add to object with quantity, or update quantity
+                // If basket object does not have item, add item to object with quantity, or update item's quantity
                 basket[item] === undefined ? basket[item] = { quantity } : basket[item].quantity += quantity;
                 // Set total price 
                 basket[item].price = prices[item] * basket[item].quantity;
             }
 
-            let subTotal = 0;
 
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
@@ -144,7 +148,7 @@
             // Update totals
             document.querySelector('.sub-total').innerHTML = `<h4>Sub-total: £${subTotal.toFixed(2)}</h4>`;
 
-            document.querySelector('.total').innerHTML = `<h3>Total: £${subTotal + deliverySelection}</h3>`;
+            document.querySelector('.total').innerHTML = `<h3>Total: £${(subTotal + deliverySelection).toFixed(2)}</h3>`;
 
             // Reset quantities to 1
             quantities.forEach(input => input.value = 1);
