@@ -43,6 +43,10 @@ function createPaymentJson(basket) {
     return paymentJson;
 }
 
+function payPalCreatePayment() {
+    
+}
+
 function executePaymentJson (basket, payerId) {
 return {
     "payer_id": payerId,
