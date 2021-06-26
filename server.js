@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const paypal = require('paypal-rest-sdk');
-const {createPaymentJson} = require('./utils/paypalutils');
+const {createPaymentJson, executePaymentJson} = require('./utils/paypalutils');
 
 // Express app
 const app = express();
@@ -44,14 +44,12 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/ban', (req, res) => {
-  res.send('helloo');
-})
-
+let tempBasket;
 app.post('/pay', (req, res) => {
   const basket = req.body;
+  tempBasket = basket;
   const paymentJson = createPaymentJson(basket);
-
+  res.locals.basket = basket;
   paypal.payment.create(paymentJson, function (error, payment) {
     if (error) {
         throw error;
@@ -66,26 +64,17 @@ app.post('/pay', (req, res) => {
 });
 
 app.get('/paysuccess', (req, res) => {
-  console.log(req.query)
-  // const payerId = req.query.PayerID;
-  // const paymentId = req.query.paymentId;
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
 
-  // const execute_payment_json = {
-  //   "payer_id": payerId,
-  //   "transactions": [{
-  //     "amount": {
-  //       "currency": "GBP",
-  //       "total": "1.00"
-  //     }
-  //   }]
-  // };
+const paymentJson = executePaymentJson(tempBasket, payerId);
 
-  // paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-  //   if (error) {
-  //     console.log(error.response);
-  //     throw error;
-  //   } else {
-  //     res.send('Success');
-  //   }
-  // });
+  paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
+    if (error) {
+      console.log(error.response);
+      throw error;
+    } else {
+      res.send('Success');
+    }
+  });
 });

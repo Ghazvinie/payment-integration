@@ -1,6 +1,5 @@
+
 function createPaymentJson(basket) {
-
-
     const items = Object.keys(basket);
     const itemsArray = items.reduce((acc, curr) => {
         if (curr !== 'delivery' && curr !== 'subTotal') {
@@ -44,4 +43,16 @@ function createPaymentJson(basket) {
     return paymentJson;
 }
 
-module.exports = { createPaymentJson };
+function executePaymentJson (basket, payerId) {
+return {
+    "payer_id": payerId,
+    "transactions": [{
+      "amount": {
+        "currency": "GBP",
+        "total": basket.delivery + basket.subTotal
+      }
+    }]
+  };
+}
+
+module.exports = { createPaymentJson, executePaymentJson };
