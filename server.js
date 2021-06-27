@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const paypal = require('paypal-rest-sdk');
-const {createPaymentJson, executePaymentJson} = require('./utils/paypalutils');
+// const {createPaymentJson, executePaymentJson} = require('./services/paypalServices');
+const purchaseRouter = require('./routers/purchaseRouter');
 
 // Express app
 const app = express();
@@ -44,36 +45,20 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-let tempBasket;
-app.post('/pay', (req, res) => {
-  const basket = req.body;
-  tempBasket = basket;
-  const paymentJson = createPaymentJson(basket);
-  paypal.payment.create(paymentJson, (error, payment) => {
-    if (error) {
-      console.log(error);
-    } else {
-      for (let i = 0; i < payment.links.length; i++){
-        if (payment.links[i].rel === 'approval_url'){
-          res.json({forwardLink: payment.links[i].href});
-        }
-      }
-    }
-  });
-});
+app.use('/purchase', purchaseRouter);
 
-app.get('/paysuccess', (req, res) => {
-  const payerId = req.query.PayerID;
-  const paymentId = req.query.paymentId;
+// app.get('/paysuccess', (req, res) => {
+//   const payerId = req.query.PayerID;
+//   const paymentId = req.query.paymentId;
 
-const paymentJson = executePaymentJson(tempBasket, payerId);
+// const paymentJson = executePaymentJson(tempBasket, payerId);
 
-  paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
-    if (error) {
-      console.log(error);
-    } else {
-      res.send('Success');
-      tempBasket = null;
-    }
-  });
-});
+//   paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       res.send('Success');
+//       tempBasket = null;
+//     }
+//   });
+// });

@@ -140,7 +140,7 @@
 
             // Convert basket object to array to be mapped over, create html based on item and quantity
             const html = Object.entries(basket).map(element => {
-                
+
                 // Whilst mapping, can also calculate sub-total
                 subTotal += element[1].quantity * element[1].price;
 
@@ -171,7 +171,7 @@
                 basket.delivery = deliverySelection;
                 basket.subTotal = subTotal;
                 // POST form data and token
-                const response = await fetch('/pay', {
+                const response = await fetch('/purchase/paypal', {
                     method: 'post',
                     body: JSON.stringify(basket),
                     headers: { 'Content-Type': 'application/json' }

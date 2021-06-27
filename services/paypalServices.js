@@ -21,8 +21,8 @@ function createPaymentJson(basket) {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:3000/paysuccess",
-            "cancel_url": "http://localhost:3000/paycancel"
+            "return_url": "http://localhost:3000/purchase/paypal/success",
+            "cancel_url": "http://localhost:3000/purchase/paypal/cancel"
         },
         "transactions": [{
             "amount": {
