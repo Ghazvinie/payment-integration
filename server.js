@@ -3,7 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const paypal = require('paypal-rest-sdk');
-// const {createPaymentJson, executePaymentJson} = require('./services/paypalServices');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
+
+
 const purchaseRouter = require('./routers/purchaseRouter');
 
 // Express app
@@ -46,19 +48,3 @@ app.get('/', (req, res) => {
 });
 
 app.use('/purchase', purchaseRouter);
-
-// app.get('/paysuccess', (req, res) => {
-//   const payerId = req.query.PayerID;
-//   const paymentId = req.query.paymentId;
-
-// const paymentJson = executePaymentJson(tempBasket, payerId);
-
-//   paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       res.send('Success');
-//       tempBasket = null;
-//     }
-//   });
-// });

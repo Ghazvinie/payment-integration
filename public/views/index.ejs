@@ -172,12 +172,11 @@
                 alert('Basket is empty');
                 return;
             }
-
             try {
                 basket.delivery = deliverySelection;
                 basket.subTotal = subTotal;
                 // POST form data and token
-                const response = await fetch('/purchase/paypal', {
+                const response = await fetch('/purchase/checkout', {
                     method: 'post',
                     body: JSON.stringify(basket),
                     headers: { 'Content-Type': 'application/json' }

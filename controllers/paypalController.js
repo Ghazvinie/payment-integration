@@ -32,8 +32,12 @@ function executePaypalPayment(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render('success');
-            req.session.basket = null;
+            if (payment.stat === 'approved') {
+                res.render('success');
+                req.session.basket = null;
+            } else {
+                res.render('index', { message: 'Payment not successful' })
+            }
         }
     });
 }
