@@ -1,6 +1,12 @@
 function checkout(req, res) {
     const basket = req.body;
-    console.log(basket);
+    req.session.basket = basket;
+    res.send({ redirect: 'purchase/checkout/basket' });
 }
 
-module.exports = { checkout };
+function basket(req, res) {
+    const basket = req.session.basket;
+    res.render('basket', { basket: basket, message: 'Your Basket' });
+}
+
+module.exports = { checkout, basket };

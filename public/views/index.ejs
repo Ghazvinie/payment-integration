@@ -175,7 +175,7 @@
             try {
                 basket.delivery = deliverySelection;
                 basket.subTotal = subTotal;
-                // POST form data and token
+                // POST basket to checkout
                 const response = await fetch('/purchase/checkout', {
                     method: 'post',
                     body: JSON.stringify(basket),
@@ -183,7 +183,7 @@
                 })
                 const data = await response.json();
                 if (response.status === 200) {
-                    window.location = data.forwardLink;
+                    window.location = data.redirect;
                 }
             } catch (err) {
                 console.log(err)
