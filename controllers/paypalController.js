@@ -4,9 +4,8 @@ const { createPaymentJson, executePaymentJson } = require('../services/paypalSer
 
 function createPaypalPayment(req, res, next) {
     const basket = req.body;
-    // tempBasket = basket;
     const paymentJson = createPaymentJson(basket);
-
+    req.session.basket = basket;
 
     paypal.payment.create(paymentJson, (error, payment) => {
         if (error) {
@@ -15,26 +14,32 @@ function createPaypalPayment(req, res, next) {
             for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === 'approval_url') {
                     res.json({ forwardLink: payment.links[i].href });
+                    // next(basket);
                 }
             }
         }
     });
 }
 
-function executePaypalPayment(req, res, next) {
+function executePaypalPayment(req, res) {
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
-  
-  const paymentJson = executePaymentJson(tempBasket, payerId);
-  
+    const basket = req.session.basket;
+
+    const paymentJson = executePaymentJson(basket, payerId);
+
     paypal.payment.execute(paymentId, paymentJson, (error, payment) => {
-      if (error) {
-        console.log(error);
-      } else {
-        res.send('Success');
-        // tempBasket = null;
-      }
+        if (error) {
+            console.log(error);
+        } else {
+            res.send('Success');
+            tempBasket = null;
+        }
     });
 }
 
-module.exports = { createPaypalPayment, executePaypalPayment };
+function cancelPaypalPayment(req, res) {
+    res.render('index', { message: 'Payment cancelled' })
+}
+
+module.exports = { createPaypalPayment, executePaypalPayment, cancelPaypalPayment };
