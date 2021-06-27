@@ -104,3 +104,8 @@ th, td {
 .totals {
   font-size: medium;
 }
+.success-message {
+  color: rgb(1, 88, 1); 
+  text-align: center; 
+  font-size: 150px;
+}

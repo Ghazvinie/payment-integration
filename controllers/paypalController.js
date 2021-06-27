@@ -32,14 +32,14 @@ function executePaypalPayment(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.send('Success');
-            tempBasket = null;
+            res.render('success');
+            req.session.basket = null;
         }
     });
 }
 
 function cancelPaypalPayment(req, res) {
-    res.render('index', { message: 'Payment cancelled' })
+    res.render('index', { message: 'Payment cancelled' });
 }
 
 module.exports = { createPaypalPayment, executePaypalPayment, cancelPaypalPayment };
