@@ -1,3 +1,5 @@
+const dotenv = require('dotenv').config();
+
 function checkout(req, res) {
     const basket = req.body;
     req.session.basket = basket;
@@ -9,7 +11,7 @@ function basket(req, res) {
     if (!basket) {
         res.redirect('/');
     }
-    res.render('basket', { basket: basket, message: 'Your Basket' });
+    res.render('basket', { basket: basket, message: 'Your Basket', key: process.env.PUBLISHABLE_KEY });
     req.session.basket = null;
 }
 
