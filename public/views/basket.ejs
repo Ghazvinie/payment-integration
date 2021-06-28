@@ -8,6 +8,7 @@
     <title>Payment Integration</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 
 </head>
 
@@ -61,7 +62,7 @@
                 </div>
                 <div class="basket-buttons-container">
                     <input type="button" value=" Pay With PayPal" id="checkout-paypal" class="basket-buttons">
-                    <input type="button" value=" Pay With Stripe" id="checkout" class="basket-buttons">
+                    <input type="button" value=" Pay With Stripe" id="checkout-stripe" class="basket-buttons">
                 </div>
             </div>
 
@@ -70,7 +71,6 @@
     </div>
 
     </div>
-    <% const stripe=Stripe(key) %>
         <script>
             const paypalCheckout = document.getElementById('checkout-paypal'); // PayPal checkout button
             const stripeCheckout = document.getElementById('checkout-stripe'); // Stripe checkout button
