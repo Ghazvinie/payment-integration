@@ -2,7 +2,7 @@ const purchaseRouter = require('express').Router();
 const { createPaypalPayment, executePaypalPayment, cancelPaypalPayment } = require('../controllers/paypalController');
 const { checkout, basket } = require('../controllers/checkoutController');
 
-purchaseRouter.post('/paypal', createPaypalPayment);
+purchaseRouter.get('/paypal', createPaypalPayment);
 
 purchaseRouter.get('/paypal/success', executePaypalPayment);
 

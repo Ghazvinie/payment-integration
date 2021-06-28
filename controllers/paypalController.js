@@ -3,9 +3,9 @@ const { createPaymentJson, executePaymentJson } = require('../services/paypalSer
 
 
 function createPaypalPayment(req, res, next) {
-    const basket = req.body;
+    const basket = req.session.basket
     const paymentJson = createPaymentJson(basket);
-    req.session.basket = basket;
+    // req.session.basket = basket;
 
     paypal.payment.create(paymentJson, (error, payment) => {
         if (error) {
@@ -13,7 +13,7 @@ function createPaypalPayment(req, res, next) {
         } else {
             for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === 'approval_url') {
-                    res.json({ forwardLink: payment.links[i].href });
+                    res.redirect(payment.links[i].href);
                     // next(basket);
                 }
             }
@@ -32,11 +32,11 @@ function executePaypalPayment(req, res) {
         if (error) {
             console.log(error);
         } else {
-            if (payment.stat === 'approved') {
-                res.render('success');
+            if (payment.httpStatusCode === 200) {
+                res.render('success', { payment });
                 req.session.basket = null;
             } else {
-                res.render('index', { message: 'Payment not successful' })
+                res.render('index', { message: 'Payment not successful' });
             }
         }
     });

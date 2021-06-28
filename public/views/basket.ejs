@@ -59,7 +59,7 @@
                     </h3>
                 </div>
                 <div class="basket-buttons-container">
-                    <input type="button" value=" Pay With PayPal" id="checkout" class="basket-buttons">
+                    <input type="button" value=" Pay With PayPal" id="checkout-paypal" class="basket-buttons">
                     <input type="button" value=" Pay With Stripe" id="checkout" class="basket-buttons">
                 </div>
             </div>
@@ -71,34 +71,10 @@
 
     </div>
     <script>
-        // const basket = locals.basket;
-        const checkout = document.getElementById('checkout'); // Checkout button
+        const checkout = document.getElementById('checkout-paypal'); // Checkout button
 
         checkout.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            console.log('hello')
-            // // Check basket is not empty
-            // if (Object.entries(basket).length === 0) {
-            //     alert('Basket is empty');
-            //     return;
-            // }
-            // try {
-            //     basket.delivery = deliverySelection;
-            //     basket.subTotal = subTotal;
-            //     // POST basket to checkout
-            //     const response = await fetch('/purchase/checkout', {
-            //         method: 'post',
-            //         body: JSON.stringify(basket),
-            //         headers: { 'Content-Type': 'application/json' }
-            //     })
-            //     const data = await response.json();
-            //     if (response.status === 200) {
-            //         window.location = data.redirect;
-            //     }
-            // } catch (err) {
-            //     console.log(err)
-            // }
+            window.location = '/purchase/paypal'
         });
 
     </script>
