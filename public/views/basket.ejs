@@ -50,14 +50,17 @@
                 </table>
 
                 <div class="totals">
-                    <h4 class="sub-total totals">Sub-total: £<%= basket.subTotal.toFixed(2) %></h4>
-                        <h4 class="delivery-price totals">Delivery: £<%= basket.delivery %>
-                        </h4>
+                    <h4 class="sub-total totals">Sub-total: £<%= basket.subTotal.toFixed(2) %>
+                    </h4>
+                    <h4 class="delivery-price totals">Delivery: £<%= basket.delivery %>
+                    </h4>
 
-                    <h3 class="total totals">Total : £<%= basket.subTotal + basket.delivery %></h3>
+                    <h3 class="total totals">Total : £<%= basket.subTotal + basket.delivery %>
+                    </h3>
                 </div>
                 <div class="basket-buttons-container">
-                    <input type="button" value="Checkout" id="checkout" class="basket-buttons"> <br> <br>
+                    <input type="button" value=" Pay With PayPal" id="checkout" class="basket-buttons">
+                    <input type="button" value=" Pay With Stripe" id="checkout" class="basket-buttons">
                 </div>
             </div>
 
@@ -68,6 +71,35 @@
 
     </div>
     <script>
+        // const basket = locals.basket;
+        const checkout = document.getElementById('checkout'); // Checkout button
+
+        checkout.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            console.log('hello')
+            // // Check basket is not empty
+            // if (Object.entries(basket).length === 0) {
+            //     alert('Basket is empty');
+            //     return;
+            // }
+            // try {
+            //     basket.delivery = deliverySelection;
+            //     basket.subTotal = subTotal;
+            //     // POST basket to checkout
+            //     const response = await fetch('/purchase/checkout', {
+            //         method: 'post',
+            //         body: JSON.stringify(basket),
+            //         headers: { 'Content-Type': 'application/json' }
+            //     })
+            //     const data = await response.json();
+            //     if (response.status === 200) {
+            //         window.location = data.redirect;
+            //     }
+            // } catch (err) {
+            //     console.log(err)
+            // }
+        });
 
     </script>
 
