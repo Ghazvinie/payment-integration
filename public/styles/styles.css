@@ -99,13 +99,22 @@ th, td {
 }
 .basket-buttons-container{
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 .totals {
+  text-align: center;
   font-size: medium;
 }
 .success-message {
   color: rgb(1, 88, 1); 
   text-align: center; 
   font-size: 150px;
+}
+.delivery-price-basket {
+  text-align: center;
+}
+.basket-container-display{
+  display: flex;
+ justify-content: center;
+
 }

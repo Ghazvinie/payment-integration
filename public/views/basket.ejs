@@ -20,48 +20,56 @@
     </h1>
 
     <hr>
-        <div class="basket-container">
-            <form>
-                <div id="basket-table-container">
-                    <h2>Shopping Basket</h2>
-                    <table id="basket-table">
-                        <tr>
-                            <th>Item:</th>
-                            <th>Quantity:</th>
-                            <th>Price:</th>
-                        </tr>
-                        <% if (basket) { %>
+    <div class="basket-container-display">
+        <form>
+            <div id="basket-table-container">
+                <h2>Shopping Basket</h2>
+                <table id="basket-table">
+                    <tr>
+                        <th>Item:</th>
+                        <th>Quantity:</th>
+                        <th>Price:</th>
+                    </tr>
+                    <% if (basket) { %>
                         <% for (const item in basket) { %>
-                            <% %>
-                       <% } %>
-                     <%   } %>
-                    </table>
+                            <% if (item !=='delivery' && item !=='subTotal' ) { %>
+                                <tr>
+                                    <td>
+                                        <%= item %>
+                                    </td>
+                                    <td>
+                                        <%= basket[item].quantity %>
+                                    </td>
+                                    <td>
+                                        £<%= basket[item].price %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% } %>
+                                        <% } %>
+                </table>
 
-                    <div class="totals">
-                        <h4 class="sub-total totals"></h4>
-                        <form>
-                            <h4 class="delivery-price totals">Delivery: £2.50</h4>
-                            <select id="delivery" required>
-                                <option value="2.50">Standard - £2.50</option>
-                                <option value="6.99">Express - £6.99</option>
-                            </select>
-                        </form>
+                <div class="totals">
+                    <h4 class="sub-total totals">Sub-total: £<%= basket.subTotal.toFixed(2) %></h4>
+                        <h4 class="delivery-price totals">Delivery: £<%= basket.delivery %>
+                        </h4>
 
-                        <h3 class="total totals"></h3>
-                    </div>
-                    <div class="basket-buttons-container">
-                        <input type="button" value="Checkout" id="checkout" class="basket-buttons"> <br> <br>
-                        <input type="button" value="Clear" class="basket-buttons" onclick="empty()">
-                    </div>
+                    <h3 class="total totals">Total : £<%= basket.subTotal + basket.delivery %></h3>
                 </div>
+                <div class="basket-buttons-container">
+                    <input type="button" value="Checkout" id="checkout" class="basket-buttons"> <br> <br>
+                </div>
+            </div>
 
-            </form>
-
-        </div>
-
+        </form>
 
     </div>
 
+
+    </div>
+    <script>
+
+    </script>
 
 </body>
 

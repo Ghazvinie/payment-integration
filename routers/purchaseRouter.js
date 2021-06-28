@@ -10,6 +10,6 @@ purchaseRouter.get('/paypal/cancel', cancelPaypalPayment);
 
 purchaseRouter.post('/checkout', checkout);
 
-purchaseRouter.get('/checkout/basket', basket )
+purchaseRouter.get('/checkout/basket', basket);
 
 module.exports = purchaseRouter;
