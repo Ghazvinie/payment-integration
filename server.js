@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const paypal = require('paypal-rest-sdk');
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 
 const purchaseRouter = require('./routers/purchaseRouter');
