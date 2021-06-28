@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline'; script-src 'self' https://js.stripe.com 'unsafe-inline'" />
+
     <title>Payment Integration</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 
 </head>
 
 <body>
+
     <h1 style="text-align: center;">
         <% if (locals.message !=undefined) { %>
             <%= message %>
@@ -71,34 +74,64 @@
     </div>
 
     </div>
-        <script>
-            const paypalCheckout = document.getElementById('checkout-paypal'); // PayPal checkout button
-            const stripeCheckout = document.getElementById('checkout-stripe'); // Stripe checkout button
-
-            paypalCheckout.addEventListener('click', async (e) => {
-                window.location = '/purchase/paypal'
-            });
-
-            stripeCheckout.addEventListener('click', async (e) => {
-                try {
-                    const response = await fetch('/purchase/stripe', {
-                        method: 'POST'
-                    });
-
-                    const session = await response.json();
-
-                    const result = await stripe.redirectToCheckout({ sessionId: session.id });
+    <script>
+        const key1 = "<%= key %>"
+    </script>
 
 
-                } catch (error) {
-                    console.log(error)
-                }
-            });
+    <script>
+        const stripe = window.Stripe(key1)
+        const paypalCheckout = document.getElementById('checkout-paypal'); // PayPal checkout button
+        const stripeCheckout = document.getElementById('checkout-stripe'); // Stripe checkout button
+
+        paypalCheckout.addEventListener('click', async (e) => {
+            window.location = '/purchase/paypal'
+        });
+
+        stripeCheckout.addEventListener('click', async (e) => {
+            fetch('/purchase/stripe', {
+
+                method: "POST",
+
+            })
+
+                .then(function (response) {
+                    return response.json();
+
+                })
+
+                .then(function (session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+
+                })
+
+                .then(function (result) {
+                    // If redirectToCheckout fails due to a browser or network
+
+                    // error, you should display the localized error message to your
+
+                    // customer using error.message.
+
+                    if (result.error) {
+                        console.log(result.error)
+                        alert(result.error.message);
+
+                    }
+
+                })
+
+                .catch(function (error) {
+
+                    console.error("Error:", error);
+
+                });
+        });
 
 
 
-        </script>
+    </script>
 
 </body>
 
 </html>
+'/purchase/stripe'

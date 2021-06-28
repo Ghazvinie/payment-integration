@@ -11,7 +11,7 @@ function basket(req, res) {
     if (!basket) {
         res.redirect('/');
     }
-    res.render('basket', { basket: basket, message: 'Your Basket', key: process.env.PUBLISHABLE_KEY });
+    res.render('basket', { basket: basket, message: 'Your Basket', key: process.env.STRIPE_PUBLISHABLE });
     req.session.basket = null;
 }
 
