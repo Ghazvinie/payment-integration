@@ -49,5 +49,5 @@ app.get('/', (req, res) => {
 app.use('/purchase', purchaseRouter);
 
 app.get('/paysuccess', (req, res) => {
-  res.send('send')
-})
+  res.send('send');
+});
