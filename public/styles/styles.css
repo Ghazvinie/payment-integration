@@ -1,120 +1,120 @@
 form{
-    width:max-content;
-    display: inline-block;
-    margin: 30px 30px;
-    padding: 30px;
-    box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background: white;
-  }
+  width:max-content;
+  display: inline-block;
+  margin: 30px 30px;
+  padding: 30px;
+  box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: white;
+}
 input{
-    padding: 10px 12px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 1em;
-    width: auto;
-  }
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  width: auto;
+}
 
 button{
-    margin-top: 30px;
-    border-radius: 10px;
-    background: #140b96;
-    border:0;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 0.8em;
-    display: inline-block;
-    padding: 10px 16px;
-    letter-spacing: 1px;
-    color: white;
-  }
+  margin-top: 30px;
+  border-radius: 10px;
+  background: #140b96;
+  border:0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: inline-block;
+  padding: 10px 16px;
+  letter-spacing: 1px;
+  color: white;
+}
 body{
-    margin: 20px 40px;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    background: #fafafa;
-    font-family: 'Courier New', Courier, monospace;
-  }
+  margin: 20px 40px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  background: #fafafa;
+  font-family: 'Courier New', Courier, monospace;
+}
 
 .btn{
-    display: inline-block;
-    padding: 0 45px;
-    width: min-content;
-  }
+  display: inline-block;
+  padding: 0 45px;
+  width: min-content;
+}
 .error{
-    color:red;
-    margin: 10px 2px;
-    font-size: 0.9em;
-    font-weight: bold;
-  }
+  color:red;
+  margin: 10px 2px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
 #dashboardHeader{
-    text-align: center;
-  }
+  text-align: center;
+}
 nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 120px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 120px;
+}
 nav ul{
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 nav li{
-    margin-left: 20px;
-  }
+  margin-left: 20px;
+}
 nav li a{
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 0.8em;
-    display: block;
-    padding: 10px 16px;
-    letter-spacing: 2px;
-  }
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+}
 .form-container{
-    width: 30%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-  }
+  width: 30%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
 .basket-container{
 width: 45%;
 }
 .container{
-  display: flex;
+display: flex;
 }
 table {
-  border-spacing: 15px;
+border-spacing: 15px;
 }
 th, td {
-  text-align: center;
+text-align: center;
 }
 #basket-table-container > h2{
-  text-align: center;
+text-align: center;
 }
 .basket-buttons {
-  width: 135px;
-  font-size: small;
-  margin: 30px 10px;
+width: 135px;
+font-size: small;
+margin: 30px 10px;
 }
 .basket-buttons-container{
-  display: flex;
-  justify-content: center;
+display: flex;
+justify-content: center;
 }
 .totals {
-  text-align: center;
-  font-size: medium;
+text-align: center;
+font-size: medium;
 }
 .success-message {
-  color: rgb(1, 88, 1); 
-  text-align: center; 
-  font-size: 100px;
+color: rgb(1, 88, 1); 
+text-align: center; 
+font-size: 100px;
 }
 .delivery-price-basket {
-  text-align: center;
+text-align: center;
 }
 .basket-container-display{
-  display: flex;
- justify-content: center;
+display: flex;
+justify-content: center;
 
 }
