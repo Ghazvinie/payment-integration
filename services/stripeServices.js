@@ -17,4 +17,4 @@ function createStripeItems(basket) {
   }, []);
 }
 
-module.exports = { createStripeItems }
+module.exports = { createStripeItems };
