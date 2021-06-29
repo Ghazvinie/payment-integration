@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; script-src 'self' https://js.stripe.com https://polyfill.io 'unsafe-inline'" />
+    <meta http-equiv="Content-Security-Policy" content="connect-src https://api.stripe.com 'unsafe-inline'; frame-src https://js.stripe.com https://hooks.stripe.com 'unsafe-inline'; script-src https://js.stripe.com 'unsafe-inline';" />
+
 
     <title>Payment Integration</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 
 </head>
 
@@ -24,7 +23,7 @@
                     Buy Something
                     <% } %>
     </h1>
-
+    default-src 'self' 'unsafe-inline';
     <hr>
     <div class="basket-container-display">
         <form>
@@ -138,4 +137,3 @@
 </body>
 
 </html>
-'/purchase/stripe'
