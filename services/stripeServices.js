@@ -1,5 +1,3 @@
-
-
 function createStripeItems(basket) {
   const items = Object.keys(basket);
   const itemsArray = items.reduce((acc, curr) => {
@@ -18,3 +16,5 @@ function createStripeItems(basket) {
     return acc;
   }, []);
 }
+
+module.exports = { createStripeItems }
