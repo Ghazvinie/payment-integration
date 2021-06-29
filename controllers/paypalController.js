@@ -5,7 +5,6 @@ const { createPaymentJson, executePaymentJson } = require('../services/paypalSer
 function createPaypalPayment(req, res, next) {
     const basket = req.session.basket;
     const paymentJson = createPaymentJson(basket);
-    // req.session.basket = basket;
 
     paypal.payment.create(paymentJson, (error, payment) => {
         if (error) {
