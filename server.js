@@ -42,14 +42,6 @@ app.set('view engine', 'ejs');
 // Set static files
 app.use(express.static(__dirname + '/public'));
 
-app.all('*', (req, res, next) => {
-  if (!req.session.basket) {
-    res.redirect('/');
-  } else {
-    next();
-  }
-});
-
 app.get('/', (req, res) => {
   res.render('index');
 });
