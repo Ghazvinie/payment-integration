@@ -2,7 +2,7 @@
 
 ## An app that allows a user to purchase items and pay with either PayPal or Stripe
 
-The app allows a user to to add items to a basket, before deciding to checkout with either PayPal or Stripe.
+This app solely focuses on the payment process. With the user being able to add items to a basket and then decide a payment method. 
 - The user can add items to a basket and select a delivery type
 - The basket displays the quantities, sub-total and total
 - The user can then checkout and choose between paying with PayPal or Stripe
