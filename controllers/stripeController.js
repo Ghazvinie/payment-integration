@@ -12,6 +12,7 @@ async function stripeCheckout(req, res) {
     cancel_url: `http://localhost:3000/paycancel`
   });
   res.json({ id: session.id });
+  console.log(session)
 }
 
 module.exports = { stripeCheckout };
