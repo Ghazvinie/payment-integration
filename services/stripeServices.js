@@ -2,6 +2,8 @@ function createStripeItems(basket) {
   const items = Object.keys(basket);
   const itemsArray = items.reduce((acc, curr) => {
     if (curr !== 'delivery' && curr !== 'subTotal') {
+      console.log(curr)
+      console.log(curr.name)
       acc.push({
         price_data: {
           currency: 'gbp',
