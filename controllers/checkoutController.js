@@ -15,4 +15,8 @@ function paymentCancel(req, res){
     res.render('index', { message: 'Payment cancelled' });
 }
 
-module.exports = { checkout, basket, paymentCancel };
+function paymentSucess(req, res){
+    res.render('success')
+}
+
+module.exports = { checkout, basket, paymentCancel, paymentSucess };
