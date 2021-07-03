@@ -9,7 +9,7 @@ async function stripeCheckout(req, res) {
     line_items: itemsArray,
     mode: 'payment',
     success_url: `http://localhost:3000/paysuccess`,
-    cancel_url: `http://localhost:3000/paycancel`
+    cancel_url: `http://localhost:3000/purchase/cancel`
   });
   res.json({ id: session.id });
 }
