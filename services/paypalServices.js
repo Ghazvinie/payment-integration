@@ -22,7 +22,7 @@ function createPaymentJson(basket) {
         },
         "redirect_urls": {
             "return_url": "http://localhost:3000/purchase/paypal/success",
-            "cancel_url": "http://localhost:3000/purchase/paypal/cancel"
+            "cancel_url": "http://localhost:3000/purchase/cancel"
         },
         "transactions": [{
             "amount": {

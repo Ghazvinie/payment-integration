@@ -11,11 +11,10 @@ purchaseRouter.get('/paypal', createPaypalPayment);
 
 purchaseRouter.get('/paypal/success', executePaypalPayment);
 
-purchaseRouter.get('/paypal/cancel', cancelPaypalPayment);
+// purchaseRouter.get('/cancel', cancelPaypalPayment);
 
 purchaseRouter.post('/stripe', stripeCheckout);
 
-purchaseRouter.get('/stripe/cancel', paymentCancel);
-
+purchaseRouter.get('/cancel', paymentCancel);
 
 module.exports = purchaseRouter;
