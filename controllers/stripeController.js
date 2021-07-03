@@ -8,7 +8,7 @@ async function stripeCheckout(req, res) {
     payment_method_types: ['card'],
     line_items: itemsArray,
     mode: 'payment',
-    success_url: `http://localhost:3000/paysuccess`,
+    success_url: `http://localhost:3000/purchase/success`,
     cancel_url: `http://localhost:3000/purchase/cancel`
   });
   res.json({ id: session.id });
