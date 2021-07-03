@@ -3,7 +3,6 @@ const dotenv = require('dotenv').config();
 function checkout(req, res) {
     const basket = req.body;
     req.session.basket = basket;
-
     res.json({ redirect: '/purchase/checkout/basket' });
 }
 
@@ -12,4 +11,8 @@ function basket(req, res) {
     res.render('basket', { basket: basket, message: 'Your Basket', key: process.env.STRIPE_PUBLISHABLE });
 }
 
-module.exports = { checkout, basket };
+function paymentCancel(req, res){
+    res.render('index', { message: 'Payment cancelled' });
+}
+
+module.exports = { checkout, basket, paymentCancel };

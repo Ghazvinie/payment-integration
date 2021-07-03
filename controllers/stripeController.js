@@ -12,7 +12,14 @@ async function stripeCheckout(req, res) {
     cancel_url: `http://localhost:3000/paycancel`
   });
   res.json({ id: session.id });
-  console.log(session)
+}
+
+function stripeSuccess(req, res) {
+  res.render('success');
+}
+
+function stripeCancel(req, res){
+  res.render('index', { message: 'Payment cancelled' });
 }
 
 module.exports = { stripeCheckout };
