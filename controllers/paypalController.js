@@ -40,8 +40,4 @@ function executePaypalPayment(req, res) {
     });
 }
 
-function cancelPaypalPayment(req, res) {
-    res.render('index', { message: 'Payment cancelled' });
-}
-
-module.exports = { createPaypalPayment, executePaypalPayment, cancelPaypalPayment };
+module.exports = { createPaypalPayment, executePaypalPayment };

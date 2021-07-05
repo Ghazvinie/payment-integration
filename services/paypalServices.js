@@ -35,9 +35,7 @@ function createPaymentJson(basket) {
             },
             "item_list": {
                 "items": itemsArray
-            },
-
-            "description": "This is the payment description."
+            }
         }]
     };
     return paymentJson;
