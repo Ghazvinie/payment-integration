@@ -4,14 +4,14 @@ function createStripeItems(basket) {
   const itemsArray = items.reduce((acc, curr) => {
     if (curr !== 'delivery' && curr !== 'subTotal') {
       acc.push({
-        'price_data': {
-          'currency': 'gbp',
-         ' product_data': {
-            'name': curr
+        price_data: {
+          currency: 'gbp',
+          product_data: {
+            name: curr
           },
-          'unit_amount': basket[curr].price * 100,
+          unit_amount: basket[curr].price * 100,
         },
-        'quantity': basket[curr].quantity,
+        quantity: basket[curr].quantity,
       });
     }
     return acc;

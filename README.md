@@ -14,6 +14,8 @@ This app solely focuses on the payment process. The user is able to add items to
 - JavaScript
 - NodeJs 16.1.0 / Express 4.17.1
 - HTML / CSS
+- paypal-rest-sdk 0.7.0
+- stripe 4.23.2
 
 ### To run:
 
@@ -36,6 +38,8 @@ process.env.STRIPE_SECRET='YOUR_KEY'
 process.env.STRIPE_PUBLISHABLE='YOUR_KEY'
 ```
 
+You will also need your own PayPal Sandbox accounts. 
+Stripe test cards are available here ['https://stripe.com/docs/testing'].
 
 ### Tests
 
