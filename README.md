@@ -39,7 +39,7 @@ process.env.STRIPE_PUBLISHABLE='YOUR_KEY'
 ```
 
 You will also need your own PayPal Sandbox accounts. 
-Stripe test cards are available [here] (https://stripe.com/docs/testing).
+Stripe test cards are available [here](https://stripe.com/docs/testing).
 
 ### Tests
 
