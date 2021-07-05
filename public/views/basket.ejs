@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://api.stripe.com https://checkout.stripe.com; frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com; script-src 'self' https://js.stripe.com https://checkout.stripe.com 'unsafe-inline'; img-src 'self' https://*.stripe.com;" />        
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://api.stripe.com https://checkout.stripe.com; frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com; script-src 'self' https://js.stripe.com https://checkout.stripe.com 'unsafe-inline'; img-src 'self' https://*.stripe.com;" />
 
     <title>Payment Integration</title>
     <link rel="stylesheet" href="/styles/styles.css">
@@ -35,28 +35,28 @@
                             <% } %>
                 </h2>
 
-              <%  if (basket) { %>
+                <% if (basket) { %>
                     <table id="basket-table">
                         <tr>
                             <th>Item:</th>
                             <th>Quantity:</th>
                             <th>Price:</th>
                         </tr>
-                            <% for (const item in basket) { %>
-                                <% if (item !=='delivery' && item !=='subTotal' ) { %>
-                                    <tr>
-                                        <td>
-                                            <%= item %>
-                                        </td>
-                                        <td>
-                                            <%= basket[item].quantity %>
-                                        </td>
-                                        <td>
-                                            £<%= basket[item].price %>
-                                        </td>
-                                    </tr>
+                        <% for (const item in basket) { %>
+                            <% if (item !=='delivery' && item !=='subTotal' ) { %>
+                                <tr>
+                                    <td>
+                                        <%= item %>
+                                    </td>
+                                    <td>
+                                        <%= basket[item].quantity %>
+                                    </td>
+                                    <td>
+                                        £<%= basket[item].price %>
+                                    </td>
+                                </tr>
+                                <% } %>
                                     <% } %>
-                                        <% } %>
 
                     </table>
                     <div class="totals">
@@ -82,38 +82,29 @@
 
 
     <script>
-        
-        const stripe = window.Stripe("<%= key %>") // Stripe key used for Stripe checkout
+        const stripe = window.Stripe("<%= key %>") // Instantiates stripe with publishableKey
         const paypalCheckout = document.getElementById('checkout-paypal'); // PayPal checkout button
         const stripeCheckout = document.getElementById('checkout-stripe'); // Stripe checkout button
 
         paypalCheckout.addEventListener('click', async (e) => {
-            window.location = '/purchase/paypal'
+            window.location = '/purchase/paypal' // Redirects to PayPal checkout functionality
         });
 
+        /**
+         * Will make a POST request, a stripe session is created and returned. The user is redirected to 
+         * the stripe checkout page to collect user details.
+        */
         stripeCheckout.addEventListener('click', async (e) => {
-            fetch('/purchase/stripe', {
-
-                method: "POST",
-
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (session) {
-                    return stripe.redirectToCheckout({ sessionId: session.id });
-                })
-                .then(function (result) {
-                    if (result.error) {
-                        console.log(result.error)
-                        alert(result.error.message);
-                    }
-                })
-                .catch(function (error) {
-                    console.error("Error:", error);
+            try {
+                const response = await fetch('/purchase/stripe', {
+                    method: "POST",
                 });
+                const session = await response.json();
+                const result = await stripe.redirectToCheckout({ sessionId: session.id });
+            } catch (error) {
+                console.log(error);
+            }
         });
-
     </script>
 
 </body>
