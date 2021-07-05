@@ -8,13 +8,6 @@ const purchaseRouter = require('./routers/purchaseRouter');
 // Express app
 const app = express();
 
-// PayPal configuration
-paypal.configure({
-  'mode': 'sandbox',
-  'client_id': process.env.PAYPAL_CLIENT_ID,
-  'client_secret': process.env.PAYPAL_CLIENT_SECRET
-});
-
 // Connect to DB and server listen
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
@@ -22,6 +15,13 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
     app.listen(3000, () => console.log('Server is listening on port 3000...'));
   })
   .catch(error => console.log('Database connection error' + error));
+
+// PayPal configuration
+paypal.configure({
+  'mode': 'sandbox',
+  'client_id': process.env.PAYPAL_CLIENT_ID,
+  'client_secret': process.env.PAYPAL_CLIENT_SECRET
+});
 
 // Express session
 app.use(session({

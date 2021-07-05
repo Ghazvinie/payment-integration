@@ -18,5 +18,5 @@ function createStripeItems(basket) {
   }, []);
   return itemsArray;
 }
- 
+
 module.exports = { createStripeItems };
