@@ -152,6 +152,7 @@
                 return `<tr><td>${element[0]}</td><td>${element[1].quantity}</td><td>£${element[1].total}</td></tr>`
             }).join('');
 
+            // Set basket html
             basketTable.innerHTML = `<tr><th>Item:</th><th>Quantity:</th><th>Price:</th></tr>` + html; // Update basket table html
 
             // Update totals
@@ -179,7 +180,7 @@
                     method: 'post',
                     body: JSON.stringify(basket),
                     headers: { 'Content-Type': 'application/json' }
-                })
+                });
                 const data = await response.json();
                 if (response.status === 200) {
                     window.location = data.redirect;
@@ -198,7 +199,7 @@
             subTotal = 0;
             return;
         }
-        
+
     </script>
 </body>
 
