@@ -14,12 +14,4 @@ async function stripeCheckout(req, res) {
   res.json({ id: session.id });
 }
 
-function stripeSuccess(req, res) {
-  res.render('success');
-}
-
-function stripeCancel(req, res){
-  res.render('index', { message: 'Payment cancelled' });
-}
-
 module.exports = { stripeCheckout };

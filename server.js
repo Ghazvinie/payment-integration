@@ -3,13 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const paypal = require('paypal-rest-sdk');
-
-
 const purchaseRouter = require('./routers/purchaseRouter');
 
 // Express app
 const app = express();
 
+// PayPal configuration
 paypal.configure({
   'mode': 'sandbox',
   'client_id': process.env.PAYPAL_CLIENT_ID,
@@ -42,8 +41,10 @@ app.set('view engine', 'ejs');
 // Set static files
 app.use(express.static(__dirname + '/public'));
 
+// Root route
 app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Puchase router
 app.use('/purchase', purchaseRouter);
