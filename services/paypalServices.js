@@ -1,4 +1,3 @@
-
 // Creates JSON for PayPal payment creation
 function createPaymentJson(basket) {
     const items = Object.keys(basket); // Get the items
