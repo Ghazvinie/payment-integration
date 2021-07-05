@@ -22,7 +22,7 @@ function createPaymentJson(basket) {
         },
         "redirect_urls": {
             "return_url": "http://localhost:3000/purchase/paypal/success",
-            "cancel_url": "http://localhost:3000/purchase/paypal/cancel"
+            "cancel_url": "http://localhost:3000/purchase/cancel"
         },
         "transactions": [{
             "amount": {
@@ -35,9 +35,7 @@ function createPaymentJson(basket) {
             },
             "item_list": {
                 "items": itemsArray
-            },
-
-            "description": "This is the payment description."
+            }
         }]
     };
     return paymentJson;

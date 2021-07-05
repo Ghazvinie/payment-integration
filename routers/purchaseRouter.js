@@ -1,6 +1,6 @@
 const purchaseRouter = require('express').Router();
-const { createPaypalPayment, executePaypalPayment, cancelPaypalPayment } = require('../controllers/paypalController');
-const { checkout, basket } = require('../controllers/checkoutController');
+const { createPaypalPayment, executePaypalPayment } = require('../controllers/paypalController');
+const { checkout, basket, paymentCancel, paymentSuccess } = require('../controllers/checkoutController');
 const { stripeCheckout } = require('../controllers/stripeController');
 
 purchaseRouter.post('/checkout', checkout);
@@ -11,9 +11,10 @@ purchaseRouter.get('/paypal', createPaypalPayment);
 
 purchaseRouter.get('/paypal/success', executePaypalPayment);
 
-purchaseRouter.get('/paypal/cancel', cancelPaypalPayment);
-
 purchaseRouter.post('/stripe', stripeCheckout);
 
+purchaseRouter.get('/cancel', paymentCancel);
+
+purchaseRouter.get('/success', paymentSuccess);
 
 module.exports = purchaseRouter;

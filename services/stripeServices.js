@@ -6,9 +6,9 @@ function createStripeItems(basket) {
         price_data: {
           currency: 'gbp',
           product_data: {
-            name: basket[curr]
+            name: curr
           },
-          unit_amount: basket[curr].price,
+          unit_amount: basket[curr].price * 100,
         },
         quantity: basket[curr].quantity,
       });
