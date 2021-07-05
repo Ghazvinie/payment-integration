@@ -46,5 +46,5 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// Puchase router
+// Purchase router
 app.use('/purchase', purchaseRouter);

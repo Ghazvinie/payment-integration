@@ -1,3 +1,4 @@
+// Creates an array of items formatted for Stripe checkout
 function createStripeItems(basket) {
   const items = Object.keys(basket);
   const itemsArray = items.reduce((acc, curr) => {

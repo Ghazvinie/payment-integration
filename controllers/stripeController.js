@@ -4,7 +4,7 @@ const { createStripeItems } = require('../services/stripeServices');
 // Creates a Stripe session for user and executes the payment, sends back the session.id 
 async function stripeCheckout(req, res) {
   const basket = req.session.basket;
-  const itemsArray = createStripeItems(basket); // Creates an array of basket items for user with the .create() method
+  const itemsArray = createStripeItems(basket); // Creates an array of basket items for use with the .create() method
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],

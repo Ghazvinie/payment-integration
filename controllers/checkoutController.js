@@ -21,7 +21,7 @@ function paymentCancel(req, res){
 
 // Renders success page 
 function paymentSuccess(req, res){
-    req.session.basket = null; // Ser session basket to null
+    req.session.basket = null; // Set session basket to null
     res.render('success');
 }
 
