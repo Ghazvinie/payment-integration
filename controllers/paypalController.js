@@ -1,6 +1,6 @@
 const paypal = require('paypal-rest-sdk');
 const { createPaymentJson, executePaymentJson } = require('../services/paypalServices');
-
+ 
 // Creates the PayPal payment
 function createPaypalPayment(req, res, next) {
     const basket = req.session.basket;

@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-.
+
 // Saves basket to session and redirects user to the basket / payment method choice
 function checkout(req, res) {
     const basket = req.body;
