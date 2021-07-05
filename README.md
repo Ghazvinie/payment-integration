@@ -15,11 +15,14 @@ This app solely focuses on the payment process. The user is able to add items to
 - At the same time a PayPal payment is created using a create payment JSON object consisting of the purchase items and other relevant details
 - Once the user logs in they are redirected to confirmation page
 - On user approval the payment is executed using an execute payment JSON object
-- The user is redirected to a success page
-
+- On successful completion the user is redirected to a success page
 
 ### Paying with Stripe:
-
+- At the basket page a stripe object is instantiated using the Stripe publishable key, this object is used for interaction with the Stripe API
+- When the user selects Stripe they are redirected to a Stripe hosted payment page
+- At the same time a Stripe session is created, the id property is used to identify the transaction
+- The user inputs their card details and confirms payment
+- On successful completion the user is redirected to a success page
 
 ### Built with:
 - JavaScript

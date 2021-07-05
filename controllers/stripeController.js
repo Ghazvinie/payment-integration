@@ -5,7 +5,7 @@ const { createStripeItems } = require('../services/stripeServices');
 async function stripeCheckout(req, res) {
   const basket = req.session.basket;
   const itemsArray = createStripeItems(basket); // Creates an array of basket items for use with the .create() method
-
+console.log('checkout')
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: itemsArray,
