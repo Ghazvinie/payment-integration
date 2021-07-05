@@ -5,7 +5,7 @@ const { createStripeItems } = require('../services/stripeServices');
 async function stripeCheckout(req, res) {
   const basket = req.session.basket;
   const itemsArray = createStripeItems(basket); // Creates an array of basket items for use with the .create() method
-  const shippingRate = basket.delivery === 2.50 ? 'shr_1J9wvcInmADjXYb4zdqlHpQo' : 'shr_1J9wwQInmADjXYb4O0faeYDU';
+  const shippingRate = basket.delivery === 2.50 ? 'shr_1J9wvcInmADjXYb4zdqlHpQo' : 'shr_1J9wwQInmADjXYb4O0faeYDU'; // Selects the shipping rate code
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     shipping_rates: [shippingRate],
