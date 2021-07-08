@@ -72,13 +72,8 @@ nav li a{
   letter-spacing: 2px;
 }
 .form-container{
-  width: 30%;
   display: flex;
-  justify-content: space-evenly;
   flex-direction: column;
-}
-.basket-container{
-width: 45%;
 }
 .container{
 display: flex;
