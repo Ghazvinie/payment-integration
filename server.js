@@ -8,8 +8,10 @@ const purchaseRouter = require('./routers/purchaseRouter');
 // Express app
 const app = express();
 
+const PORT = process.env.PORT || 3001
+
 // Connect to DB and server listen
-app.listen(3000, () => console.log('Server is listening on port 3000...'));
+app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
 
 // PayPal configuration
 paypal.configure({
@@ -43,3 +45,7 @@ app.get('/', (req, res) => {
 
 // Purchase router
 app.use('/purchase', purchaseRouter);
+
+app.get('*', (req, res) => {
+  res.render('index');
+});
