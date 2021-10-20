@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Payment Integration</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel='stylesheet' href='/styles/styles.css'>
 </head>
 
 <body>
-    <h1 style="text-align: center;">
+    <h1 style='text-align: center;'>
         <% if (locals.message !=undefined) { %>
             <%= message %>
                 <% } else { %>
@@ -19,46 +19,46 @@
     </h1>
 
     <hr>
-    <div class="container">
-        <div class="form-container">
-            <form class="buy-item">
+    <div class='container'>
+        <div class='form-container'>
+            <form class='buy-item'>
                 <h2>Buy Me</h2>
                 <h3>£10.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Buy Me" value="1" min="1" max="10" style="width: 50px;"
-                    class="input-value" />
-                <input type="submit" value="Add To Basket" />
+                <input type='number' name='Buy Me' value='1' min='1' max='10' style='width: 50px;'
+                    class='input-value' />
+                <input type='submit' value='Add To Basket' />
                 <br />
             </form>
 
-            <form class="buy-item">
+            <form class='buy-item'>
                 <h2>Get Me</h2>
                 <h3>£15.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Get Me" value="1" min="1" max="10" style="width: 50px;"
-                    class="input-value" />
-                <input type="submit" value="Add To Basket" />
+                <input type='number' name='Get Me' value='1' min='1' max='10' style='width: 50px;'
+                    class='input-value' />
+                <input type='submit' value='Add To Basket' />
                 <br />
             </form>
 
-            <form class="buy-item">
+            <form class='buy-item'>
                 <h2>Want Me</h2>
                 <h3>£20.00</h3>
                 <br />
                 Quantity:
-                <input type="number" name="Want Me" value="1" min="1" max="10" style="width: 50px;"
-                    class="input-value" />
-                <input type="submit" value="Add To Basket" />
+                <input type='number' name='Want Me' value='1' min='1' max='10' style='width: 50px;'
+                    class='input-value' />
+                <input type='submit' value='Add To Basket' />
                 <br />
             </form>
         </div>
-        <div class="basket-container">
+        <div class='basket-container'>
             <form>
-                <div id="basket-table-container">
+                <div id='basket-table-container'>
                     <h2>Shopping Basket</h2>
-                    <table id="basket-table">
+                    <table id='basket-table'>
                         <tr>
                             <th>Item:</th>
                             <th>Quantity:</th>
@@ -66,36 +66,32 @@
                         </tr>
                     </table>
 
-                    <div class="totals">
-                        <h4 class="sub-total totals"></h4>
+                    <div class='totals'>
+                        <h4 class='sub-total totals'></h4>
                         <form>
-                            <h4 class="delivery-price totals">Delivery: £2.50</h4>
-                            <select id="delivery" required>
-                                <option value="2.50">Standard - £2.50</option>
-                                <option value="6.99">Express - £6.99</option>
+                            <h4 class='delivery-price totals'>Delivery: £2.50</h4>
+                            <select id='delivery' required>
+                                <option value='2.50'>Standard - £2.50</option>
+                                <option value='6.99'>Express - £6.99</option>
                             </select>
                         </form>
 
-                        <h3 class="total totals"></h3>
+                        <h3 class='total totals'></h3>
                     </div>
-                    <div class="basket-buttons-container">
-                        <input type="button" value="Checkout" id="checkout" class="basket-buttons"> <br> <br>
-                        <input type="button" value="Clear" class="basket-buttons" onclick="empty()">
+                    <div class='basket-buttons-container'>
+                        <input type='button' value='Checkout' id='checkout' class='basket-buttons'> <br> <br>
+                        <input type='button' value='Clear' class='basket-buttons' onclick='empty()'>
                     </div>
-                    <div class="text">
+                    <div class='text'>
      
-                            When paying please use a test account or a dummy card! 
-
+                            When paying please use a test account or a dummy card! See below...
+                            <br/><br/>
+                            <a href='https://developer.paypal.com/home' target='blank'>PayPal</a>
+                            <a href='https://stripe.com/docs/testing' target='blank'>Stripe</a>
                     </div>
                 </div>
-
             </form>
-
-
-
         </div>
-
-
     </div>
 
     <script>
