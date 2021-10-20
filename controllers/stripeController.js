@@ -14,8 +14,10 @@ async function stripeCheckout(req, res) {
     },
     line_items: itemsArray,
     mode: 'payment',
-    success_url: `https://paypal-stripe-payment.herokuapp.com/purchase/success`,
+    success_url: `https://paypal-stripe-payment.herokuapp.com/purchase/success`, // Use for deploy
     cancel_url: `https://paypal-stripe-payment.herokuapp.com/purchase/cancel`
+    // success_url: `http://localhost:3000/purchase/success`, // Use for development
+    // cancel_url: `http://localhost:3000/purchase/cancel`
   });
   res.json({ id: session.id });
 }
