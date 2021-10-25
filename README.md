@@ -26,8 +26,8 @@ This app solely focuses on the payment process. The user is able to add items to
 
 ### Built with:
 - Node.js 14.18.1 / Express 4.17.1
-- paypal-rest-sdk 0.7.0
-- stripe 4.23.2
+- Paypal-Rest-Sdk 0.7.0
+- Stripe 4.23.2
 
 ### To run:
 
