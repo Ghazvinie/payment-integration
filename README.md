@@ -25,9 +25,7 @@ This app solely focuses on the payment process. The user is able to add items to
 - On successful completion the user is redirected to a success page
 
 ### Built with:
-- JavaScript
-- NodeJs 16.1.0 / Express 4.17.1
-- HTML / CSS
+- NodeJs 14.18.1 / Express 4.17.1
 - paypal-rest-sdk 0.7.0
 - stripe 4.23.2
 
